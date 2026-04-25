@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>Pending Approval</h2>
+  <div class="table-wrap" style="margin-top:16px;">
+    <table>
+      <thead>
+        <tr><th>Challan No</th><th>Date</th><th>Party</th><th>Machine</th><th>Items</th><th>Total</th><th>Maker</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+      {% for row in rows %}
+        <tr>
+          <td>{{ row.challan_no }}</td>
+          <td>{{ row.challan_date }}</td>
+          <td>{{ row.challan_to }}</td>
+          <td>{{ row.machine_no }}</td>
+          <td>{{ row.item_count }}</td>
+          <td>₹ {{ '%.2f'|format(row.grand_total or 0) }}</td>
+          <td>{{ row.maker_username }}</td>
+          <td>
+            <div class="actions">
+              <a class="btn btn-secondary" href="{{ url_for('challan_view', challan_id=row.id) }}">Open</a>
+              <form method="post" action="{{ url_for('approve_challan', challan_id=row.id) }}"><button class="btn btn-primary" type="submit">Approve</button></form>
+              <form method="post" action="{{ url_for('reject_challan', challan_id=row.id) }}"><button class="btn btn-danger" type="submit">Reject</button></form>
+            </div>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="8">No pending approvals.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

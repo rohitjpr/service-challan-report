@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card no-print">
+  <form method="get" class="form-grid">
+    <div class="field"><label>Search</label><input type="text" name="q" value="{{ q }}" placeholder="challan no / party / machine"></div>
+    <div class="field"><label>Status</label>
+      <select name="status">
+        <option value="">All</option>
+        <option value="Pending Approval" {% if status=='Pending Approval' %}selected{% endif %}>Pending Approval</option>
+        <option value="Approved" {% if status=='Approved' %}selected{% endif %}>Approved</option>
+        <option value="Rejected" {% if status=='Rejected' %}selected{% endif %}>Rejected</option>
+      </select>
+    </div>
+    <div class="field"><label>Destination</label><input type="text" name="destination" value="{{ destination }}"></div>
+    <div class="actions"><button class="btn btn-primary" type="submit">Filter</button><a class="btn btn-secondary" href="{{ url_for('challans') }}">Reset</a></div>
+  </form>
+</div>
+<div class="card" style="margin-top:18px;">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Challan No</th><th>Date</th><th>Purpose</th><th>Challan To</th><th>Ship To</th><th>Destination</th><th>Machine No</th><th>Model</th><th>Qty</th><th>Total</th><th>Status</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ row.challan_no }}</td>
+          <td>{{ row.challan_date }}</td>
+          <td>{{ row.purpose }}</td>
+          <td>{{ row.challan_to }}</td>
+          <td>{{ row.ship_to }}</td>
+          <td>{{ row.destination }}</td>
+          <td>{{ row.machine_no }}</td>
+          <td>{{ row.model }}</td>
+          <td>{{ row.total_qty }}</td>
+          <td>₹ {{ '%.2f'|format(row.grand_total or 0) }}</td>
+          <td><span class="badge {{ row.status }}">{{ row.status }}</span></td>
+          <td><a href="{{ url_for('challan_view', challan_id=row.id) }}">Open</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="12">No challans found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,106 @@
+:root {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --line: #dbe2ea;
+  --primary: #0f766e;
+  --primary-dark: #115e59;
+  --danger: #b91c1c;
+  --warn: #9a3412;
+  --success: #166534;
+  --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  --radius: 14px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+a { color: var(--primary); text-decoration: none; }
+.container { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+.topbar {
+  background: #0b1324;
+  color: white;
+  padding: 14px 0;
+  box-shadow: var(--shadow);
+}
+.topbar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.brand { font-size: 22px; font-weight: 700; color: white; }
+.nav { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.nav a { color: #dbeafe; padding: 8px 12px; border-radius: 10px; }
+.nav a:hover { background: rgba(255,255,255,.08); }
+.page { padding: 24px 0 40px; }
+.grid { display: grid; gap: 16px; }
+.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+.kpi .label { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+.kpi .value { font-size: 28px; font-weight: 700; }
+.table-wrap { overflow: auto; }
+table { width: 100%; border-collapse: collapse; background: white; }
+th, td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; font-size: 14px; vertical-align: top; }
+th { background: #eff6ff; font-size: 13px; text-transform: uppercase; letter-spacing: .03em; }
+.form-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 13px; color: var(--muted); font-weight: 700; }
+input, select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: white;
+  font: inherit;
+}
+textarea { min-height: 90px; resize: vertical; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-secondary { background: #e2e8f0; color: #0f172a; }
+.btn-danger { background: var(--danger); color: white; }
+.badge { padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; display: inline-block; }
+.badge.Pending\ Approval { background: #fff7ed; color: var(--warn); }
+.badge.Approved { background: #ecfdf5; color: var(--success); }
+.badge.Rejected { background: #fef2f2; color: var(--danger); }
+.flash { padding: 12px 14px; border-radius: 12px; margin-bottom: 14px; }
+.flash.success { background: #ecfdf5; color: var(--success); border: 1px solid #bbf7d0; }
+.flash.error { background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; }
+.login-shell { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+.login-card { width: min(460px, 100%); }
+.muted { color: var(--muted); }
+.right { text-align: right; }
+.print-header { display:flex; justify-content:space-between; gap:16px; align-items:start; }
+.item-row { display:grid; grid-template-columns: 3fr 1.5fr 1fr 1fr auto; gap:10px; margin-bottom:10px; }
+.footer-note { color: var(--muted); font-size: 13px; margin-top: 14px; }
+@media (max-width: 960px) {
+  .grid-4, .grid-2, .form-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .grid-4, .grid-2, .form-grid, .item-row { grid-template-columns: 1fr; }
+  .topbar .wrap { flex-direction: column; align-items: flex-start; }
+}
+@media print {
+  .topbar, .no-print { display: none !important; }
+  body { background: white; }
+  .card { box-shadow: none; border: 1px solid #ccc; }
+  .page { padding: 0; }
+}

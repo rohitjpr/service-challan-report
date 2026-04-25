@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="login-shell">
+  <div class="card login-card">
+    <h2>Login</h2>
+    <p class="muted">Use default users from README and change passwords after deployment.</p>
+    <form method="post" class="grid" style="margin-top:16px;">
+      <div class="field">
+        <label>Username</label>
+        <input type="text" name="username" required>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" required>
+      </div>
+      <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

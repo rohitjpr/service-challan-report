@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>Import Existing Excel Register</h2>
+  <p class="muted">Upload the challan sheet having columns like CHALLAN DATE, CHALLAN NO, PURPOSE, ITEM NAME, ITEM CODE, QTY, RATE, TOTAL, CONDITIONS.</p>
+  <form method="post" enctype="multipart/form-data" style="margin-top:16px;">
+    <div class="field"><label>Select Excel File</label><input type="file" name="excel_file" accept=".xlsx,.xlsm,.xltx,.xltm" required></div>
+    <div class="actions" style="margin-top:16px;"><button class="btn btn-primary" type="submit">Import Excel</button></div>
+  </form>
+</div>
+{% endblock %}

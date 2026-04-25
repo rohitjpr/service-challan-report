@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid grid-4">
+  <div class="card kpi"><div class="label">Total Challans</div><div class="value">{{ stats.challans }}</div></div>
+  <div class="card kpi"><div class="label">Pending Approval</div><div class="value">{{ stats.pending }}</div></div>
+  <div class="card kpi"><div class="label">Approved</div><div class="value">{{ stats.approved }}</div></div>
+  <div class="card kpi"><div class="label">Total Value</div><div class="value">₹ {{ '%.2f'|format(stats.value or 0) }}</div></div>
+</div>
+<div class="card" style="margin-top:18px;">
+  <div class="actions no-print" style="justify-content:space-between; margin-bottom:12px;">
+    <h3 style="margin:0;">Recent Challans</h3>
+    <a class="btn btn-primary" href="{{ url_for('new_challan') }}">Create New</a>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Challan No</th><th>Date</th><th>Party</th><th>Machine</th><th>Items</th><th>Total</th><th>Status</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in recent %}
+        <tr>
+          <td>{{ row.challan_no }}</td>
+          <td>{{ row.challan_date }}</td>
+          <td>{{ row.challan_to }}</td>
+          <td>{{ row.machine_no }}</td>
+          <td>{{ row.item_count }}</td>
+          <td>₹ {{ '%.2f'|format(row.grand_total or 0) }}</td>
+          <td><span class="badge {{ row.status }}">{{ row.status }}</span></td>
+          <td><a href="{{ url_for('challan_view', challan_id=row.id) }}">View</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8">No data available.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Print {{ challan.challan_no }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body onload="window.print()">
+  <main class="page">
+    <div class="container">
+      <div class="card">
+        <div class="print-header">
+          <div>
+            <h1 style="margin:0 0 8px;">SERVICE CHALLAN</h1>
+            <div><strong>Challan No:</strong> {{ challan.challan_no }}</div>
+            <div><strong>Date:</strong> {{ challan.challan_date }}</div>
+          </div>
+          <div class="right">
+            <div><strong>Status:</strong> {{ challan.status }}</div>
+            <div><strong>Machine No:</strong> {{ challan.machine_no }}</div>
+            <div><strong>Model:</strong> {{ challan.model }}</div>
+          </div>
+        </div>
+        <div class="grid grid-2" style="margin-top:18px;">
+          <div>
+            <p><strong>Purpose:</strong> {{ challan.purpose }}</p>
+            <p><strong>Challan To:</strong> {{ challan.challan_to }}</p>
+            <p><strong>Ship To:</strong> {{ challan.ship_to }}</p>
+            <p><strong>Destination:</strong> {{ challan.destination }}</p>
+          </div>
+          <div>
+            <p><strong>Deptt.:</strong> {{ challan.part_issue_deptt }}</p>
+            <p><strong>Received / Issued:</strong> {{ challan.received_status }}</p>
+            <p><strong>Received Date:</strong> {{ challan.received_issued_date }}</p>
+            <p><strong>Received By / To:</strong> {{ challan.received_by_to }}</p>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead><tr><th>#</th><th>Item Name</th><th>Item Code</th><th>Qty</th><th>Rate</th><th>Total</th></tr></thead>
+            <tbody>
+              {% for item in items %}
+              <tr><td>{{ loop.index }}</td><td>{{ item.item_name }}</td><td>{{ item.item_code }}</td><td>{{ item.qty }}</td><td>{{ item.rate }}</td><td>{{ item.total }}</td></tr>
+              {% endfor %}
+              <tr><th colspan="3" class="right">Grand Total</th><th>{{ totals.total_qty }}</th><th></th><th>{{ totals.grand_total }}</th></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:16px;"><strong>Remarks:</strong> {{ challan.remarks }}</p>
+        <p><strong>Conditions:</strong> {{ challan.conditions }}</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:30px; margin-top:48px;">
+          <div><strong>Prepared By</strong><br>{{ challan.maker_username }}</div>
+          <div><strong>Checked By</strong><br>{{ challan.checker_username or '' }}</div>
+          <div><strong>Receiver Signature</strong><br><br>____________________</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

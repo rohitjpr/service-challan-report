@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title or 'Service Challan Report' }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  {% if current_user.is_authenticated %}
+  <header class="topbar no-print">
+    <div class="container wrap">
+      <a class="brand" href="{{ url_for('dashboard') }}">Service Challan Report</a>
+      <nav class="nav">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('challans') }}">Challans</a>
+        {% if current_user.role in ['admin','maker'] %}
+        <a href="{{ url_for('new_challan') }}">New Challan</a>
+        <a href="{{ url_for('import_excel') }}">Import Excel</a>
+        {% endif %}
+        {% if current_user.role in ['admin','checker'] %}
+        <a href="{{ url_for('approvals') }}">Approvals</a>
+        <a href="{{ url_for('audit') }}">Audit</a>
+        {% endif %}
+        <a href="{{ url_for('export_register') }}">Export</a>
+        <a href="{{ url_for('logout') }}">Logout ({{ current_user.username }})</a>
+      </nav>
+    </div>
+  </header>
+  {% endif %}
+  <main class="page">
+    <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+</body>
+</html>

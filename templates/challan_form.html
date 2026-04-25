@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>Create Service Challan</h2>
+  <form method="post" style="margin-top:16px;">
+    <div class="form-grid">
+      <div class="field"><label>Challan Date</label><input type="date" name="challan_date" value="{{ form.challan_date or '' }}"></div>
+      <div class="field"><label>Challan No</label><input type="text" name="challan_no" value="{{ form.challan_no or '' }}" required></div>
+      <div class="field"><label>Purpose</label><input type="text" name="purpose" value="{{ form.purpose or '' }}"></div>
+      <div class="field"><label>Challan To</label><input type="text" name="challan_to" value="{{ form.challan_to or '' }}"></div>
+      <div class="field"><label>Ship To</label><input type="text" name="ship_to" value="{{ form.ship_to or '' }}"></div>
+      <div class="field"><label>Destination</label><input type="text" name="destination" value="{{ form.destination or '' }}"></div>
+      <div class="field"><label>Part Issue Deptt.</label><input type="text" name="part_issue_deptt" value="{{ form.part_issue_deptt or '' }}"></div>
+      <div class="field"><label>Machine No</label><input type="text" name="machine_no" value="{{ form.machine_no or '' }}"></div>
+      <div class="field"><label>Model</label><input type="text" name="model" value="{{ form.model or '' }}"></div>
+      <div class="field"><label>Received / Issued</label><input type="text" name="received_status" value="{{ form.received_status or '' }}"></div>
+      <div class="field"><label>Received / Issued Date</label><input type="text" name="received_issued_date" value="{{ form.received_issued_date or '' }}" placeholder="05.04.2025"></div>
+      <div class="field"><label>Received By / To</label><input type="text" name="received_by_to" value="{{ form.received_by_to or '' }}"></div>
+      <div class="field" style="grid-column: span 3;"><label>Remarks</label><textarea name="remarks">{{ form.remarks or '' }}</textarea></div>
+      <div class="field" style="grid-column: span 3;"><label>Conditions</label><textarea name="conditions">{{ form.conditions or '' }}</textarea></div>
+    </div>
+
+    <div class="card" style="margin-top:18px; padding:14px; background:#f8fafc;">
+      <div class="actions" style="justify-content:space-between; margin-bottom:10px;">
+        <strong>Item Rows</strong>
+        <button class="btn btn-secondary no-print" type="button" onclick="addItemRow()">+ Add Item</button>
+      </div>
+      <div id="itemRows">
+        {% for item in items %}
+        <div class="item-row">
+          <input type="text" name="item_name[]" placeholder="Item Name" value="{{ item.item_name or '' }}">
+          <input type="text" name="item_code[]" placeholder="Item Code" value="{{ item.item_code or '' }}">
+          <input type="number" step="0.01" name="qty[]" placeholder="Qty" value="{{ item.qty or '' }}">
+          <input type="number" step="0.01" name="rate[]" placeholder="Rate" value="{{ item.rate or '' }}">
+          <button class="btn btn-danger no-print" type="button" onclick="this.parentElement.remove()">Remove</button>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="actions" style="margin-top:18px;">
+      <button class="btn btn-primary" type="submit">Save Challan</button>
+      <a class="btn btn-secondary" href="{{ url_for('challans') }}">Cancel</a>
+    </div>
+  </form>
+</div>
+<script>
+function addItemRow(){
+  const wrap = document.getElementById('itemRows');
+  const row = document.createElement('div');
+  row.className = 'item-row';
+  row.innerHTML = `
+    <input type="text" name="item_name[]" placeholder="Item Name">
+    <input type="text" name="item_code[]" placeholder="Item Code">
+    <input type="number" step="0.01" name="qty[]" placeholder="Qty">
+    <input type="number" step="0.01" name="rate[]" placeholder="Rate">
+    <button class="btn btn-danger no-print" type="button" onclick="this.parentElement.remove()">Remove</button>`;
+  wrap.appendChild(row);
+}
+</script>
+{% endblock %}
